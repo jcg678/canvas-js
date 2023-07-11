@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="author" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--<link href="css/style.css" rel="stylesheet">-->
+</head>
+
+<body>
+
+  <p>Hello, world!</p>
+    <canvas id="canvas" width="600" height="400"></canvas>
+
+
+</body>
+<style>
+canvas{
+    background-color: gray;
+    border: solid yellow 3px;
+
+}    
+</style>
+<script>
+    window.onload = function(){
+        
+        canvas = document.getElementById('canvas');
+        
+        if(canvas && canvas.getContext){
+            
+            ctx= canvas.getContext("2d");
+            if(ctx){
+              ctx.lineWidth = 25;
+              ctx.strokeStyle = "yellow";
+              
+              ctx.beginPath();
+              ctx.lineCap="round"; 
+              ctx.moveTo(50,50);
+              ctx.lineTo(450,50);
+              ctx.stroke();
+
+              ctx.strokeStyle = "green";
+              ctx.beginPath();
+              ctx.lineCap="square";
+              ctx.moveTo(50,100);
+              ctx.lineTo(450,100);
+              ctx.stroke();
+
+              ctx.strokeStyle = "blue";
+              ctx.lineCap="butt";
+              ctx.beginPath();
+              ctx.moveTo(50,150);
+              ctx.lineTo(450,150);
+              ctx.stroke();
+
+
+                
+            }else{
+                console.log('No se soporta el canvas');
+               
+            }
+        }
+    }
+  </script>
+
+</html>
