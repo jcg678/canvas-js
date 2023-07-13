@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="author" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--<link href="css/style.css" rel="stylesheet">-->
+</head>
+
+<body>
+
+  <p>Hello, world!</p>
+    <canvas id="canvas" width="600" height="400"></canvas>
+
+
+</body>
+<style>
+canvas{
+    background-color: gray;
+    border: solid yellow 3px;
+
+}    
+</style>
+<script>
+    window.onload = function(){
+        
+        canvas = document.getElementById('canvas');
+        
+        if(canvas && canvas.getContext){
+            
+            ctx= canvas.getContext("2d");
+            if(ctx){
+              ctx.lineWidth = 10;
+              ctx.strokeStyle = "yellow";
+              
+              ctx.beginPath();
+              var x1=20, y1=20;
+              ctx.moveTo(x1,y1);
+              ctx.quadraticCurveTo(150,200,400,20);
+              ctx.stroke();
+                
+            }else{
+                console.log('No se soporta el canvas');
+               
+            }
+        }
+    }
+  </script>
+
+</html>
