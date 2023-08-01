@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="author" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--<link href="css/style.css" rel="stylesheet">-->
+</head>
+
+<body>
+
+  <p>Hello, world!</p>
+    <canvas id="canvas" width="600" height="400"></canvas>
+
+
+</body>
+<style>
+canvas{
+    background-color: gray;
+    border: solid yellow 3px;
+
+}    
+</style>
+<script>
+    window.onload = function(){
+        
+        canvas = document.getElementById('canvas');
+        
+        if(canvas && canvas.getContext){
+            
+            ctx= canvas.getContext("2d");
+            if(ctx){
+              
+                var  inicioX = 85;
+                var inicioY = 70;
+                var desplazamiento = 30;
+                var lineas = 15;
+
+                ctx.lineWidth = 10;
+                ctx.strokeStyle= "blue";
+                ctx.lineCap = "round";
+                ctx.lineJoin= "round";
+
+                ctx.beginPath();
+                ctx.moveTo(inicioX,inicioY);
+
+                for(var i=0; i<lineas; i++){
+                    var x= inicioX+((i+1)*desplazamiento);
+                    var y=inicioY;
+
+                    if(i%2== 0 ){
+                        y = inicioY +100;
+
+                    }
+                    ctx.lineTo(x,y);
+                }
+
+                ctx.stroke();
+
+
+
+                
+            }else{
+                console.log('No se soporta el canvas');
+               
+            }
+        }
+    }
+  </script>
+
+</html>
