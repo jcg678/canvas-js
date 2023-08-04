@@ -35,7 +35,22 @@ canvas{
             ctx= canvas.getContext("2d");
             if(ctx){
               
-             
+              let radio = 0 , angulo = 0;
+              ctx.lineWidth = 10;
+              ctx.strokeStyle = "orange";
+              ctx.beginPath();
+              ctx.moveTo(canvas.width/2,canvas.height/2);             
+
+              for(var i = 0;i<200; i++){
+                radio +=0.75;
+                angulo +=(Math.PI*2)/50;
+                var x = canvas.width/2 + radio * Math.cos(angulo);
+                var y = canvas.height/2 + radio * Math.sin(angulo);
+                ctx.lineTo(x,y); 
+              }
+
+              ctx.stroke();
+
 
 
                 
