@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="author" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--<link href="css/style.css" rel="stylesheet">-->
+</head>
+
+<body>
+
+  <p>Hello, world!</p>
+    <canvas id="canvas" width="600" height="400"></canvas>
+
+
+</body>
+<style>
+canvas{
+    background-color: gray;
+    border: solid yellow 3px;
+
+}    
+</style>
+<script>
+  function Rectangulo(x,y,w,alto,radio,fondo,linea){
+    this.x=x;
+    this.y=y;
+    this.w=w;
+    this.h=alto;
+    this.r=radio;
+    this.f=fondo;
+    this.l=linea;
+
+    this.dibujar = function(){
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(this.x,this.y+this.r);
+
+      //esquina inferio izquiera
+      ctx.lineTo(this.x, this.y+this.h-this.r);
+      ctx.quadraticCurveTo(this.x, this.y+this.h, this.x+this.r, this.y+this.h);
+
+      //esquina inferior derecha
+      ctx.lineTo(this.x + this.w -this.r, this.y+this.h);
+      ctx.quadraticCurveTo(this.x + this.w, this.y+this.h, this.x+this.w, this.y+this.h-this.r);
+
+      //esquina superior derecha
+      ctx.lineTo(this.x + this.w, this.y+this.r);
+      ctx.quadraticCurveTo(this.x + this.w, this.y, this.x+this.w -this.r, this.y);
+
+      //esquina superior izquierda
+      ctx.lineTo(this.x + this.r, this.y);
+      ctx.quadraticCurveTo(this.x , this.y, this.x, this.y +this.r);
+
+      ctx.fillStyle = this.f;
+      ctx.strokeStyle = this.l;
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+
+
+    }
+
+  }
+
+
+    window.onload = function(){
+        
+        canvas = document.getElementById('canvas');
+        
+        if(canvas && canvas.getContext){
+            
+            ctx= canvas.getContext("2d");
+            if(ctx){
+
+              var rectangulo1 = new Rectangulo(30,30,200,120,20,"cyan","black");
+              rectangulo1.dibujar();
+
+              var rectangulo2 = new Rectangulo(30,200,200,120,20,"red","black");
+              rectangulo2.dibujar();
+           
+                
+            }else{
+                console.log('No se soporta el canvas');
+               
+            }
+        }
+    }
+  </script>
+
+</html>
