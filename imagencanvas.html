@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="author" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--<link href="css/style.css" rel="stylesheet">-->
+</head>
+
+<body>
+
+  <p>Hello, world!</p>
+    <canvas id="canvas" width="600" height="400"></canvas>
+
+    <select name="" id="archivo">
+      <option value="">Seleccione un archivo</option>
+      <option value="phone.png">Phone</option>
+      <option value="pelota.png">Pelota</option>
+    </select>
+
+
+</body>
+<style>
+body{
+  width: 510px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+canvas{
+    background-color: green;
+    border: solid yellow 3px;
+
+}    
+</style>
+<script>
+
+  var canvas,ctx,imagen;
+  var archivoSelect;
+    window.onload = function(){
+        
+        archivoSelect = document.getElementById('archivo');
+
+        canvas = document.getElementById('canvas');
+        
+        if(canvas && canvas.getContext){
+            
+            ctx= canvas.getContext("2d");
+            if(ctx){
+
+              archivoSelect.onchange = function(e){
+                if(archivoSelect.value != ""){
+                  imagen.src="imagenes/"+archivoSelect.value;
+                  imagen.onload = function(e){
+                    procesaImagen();
+                  }
+                }
+              }
+              
+              function procesaImagen(){
+                limpiar();
+                ctx.drawImage(imagen,10,10);
+              }
+
+              function limpiar(){
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+              }
+
+              imagen = new Image();
+              imagen.src = "imagenes/pelota.png";
+              imagen.onload = function(){
+                procesaImagen();
+              }
+
+            }else{
+                console.log('No se soporta el canvas');
+               
+            }
+        }
+    }
+  </script>
+
+</html>
