@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="author" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--<link href="css/style.css" rel="stylesheet">-->
+</head>
+
+<body>
+
+  <p>Hello, world!</p>
+    <canvas id="canvas" width="600" height="400"></canvas>
+
+    <select name="" id="archivo">
+      <option value="">Seleccione un archivo</option>
+      <option value="phone.png">Phone</option>
+      <option value="pelota.png">Pelota</option>
+    </select>
+
+
+</body>
+<style>
+body{
+  width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+canvas{
+    background-color: green;
+    
+}    
+</style>
+<script>
+
+  const game={
+    ctx:null,
+    canvas:null,
+    radio:10,
+    bolaX:50,
+    bolaY:50,
+    colorBola:"red",
+    disX:20,
+  }
+
+    window.onload = function(){
+        
+        game.canvas = document.getElementById("canvas");
+        
+        if(game.canvas && game.canvas.getContext){
+            game.ctx = game.canvas.getContext("2d");
+
+            if(game.ctx){
+                game.ctx.lineWidth = game.radio;
+                game.ctx.fillStyle = game.colorBola;
+                mueve();
+                setInterval(mueve,60);
+
+
+            }else{
+                console.log('No se soporta el canvas');
+               
+            }
+        }
+    }
+
+    const mueve=()=>{
+      game.bolaX += game.disX;
+      game.ctx.beginPath();
+      game.ctx.arc(game.bolaX,game.bolaY,game.radio,0,2*Math.PI,true);
+      game.ctx.fill();
+    }
+  </script>
+
+</html>
