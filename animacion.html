@@ -45,8 +45,12 @@ canvas{
     bolaX:300,
     bolaY:200,
     colorBola:"red",
-    dx:-4,
-    dy:-4
+    dx:4,
+    dy:-4,
+    limiteDerecha:0,
+    limiteIzquierda:0,
+    limiteAbajo:0,
+    limiteArriba: 0
   }
 
     window.onload = function(){
@@ -57,8 +61,7 @@ canvas{
             game.ctx = game.canvas.getContext("2d");
 
             if(game.ctx){
-                game.ctx.lineWidth = game.radio;
-                game.ctx.fillStyle = game.colorBola;
+                inicio();
                 mueve();
                 setInterval(mueve,60);
 
@@ -70,13 +73,44 @@ canvas{
         }
     }
 
+    const inicio = ()=>{
+      game.ctx.lineWidth = game.radio;
+      game.ctx.fillStyle = game.colorBola;
+
+      game.limiteDerecha = game.canvas.width -game.radio;
+      game.limiteIzquierda = game.radio;
+
+      game.limiteAbajo = game.canvas.height -game.radio;
+      game.limiteArriba = game.radio;
+
+    }
+
     const mueve=()=>{
       game.ctx.clearRect(0,0,game.canvas.width,game.canvas.height);
+      verificar();
       game.bolaX += game.dx;
-      game.bolaY += game.dy;
+      //game.bolaY += game.dy;
       game.ctx.beginPath();
       game.ctx.arc(game.bolaX,game.bolaY,game.radio,0,2*Math.PI,true);
       game.ctx.fill();
+    }
+
+    const verificar=()=>{
+      let nBolaX = game.bolaX + game.dx;
+      let nBolaY = game.bolaY + game.dy;
+
+      if(nBolaX > game.limiteDerecha){
+        game.dx *= -1;
+        nBolaX = game.limiteDerecha;
+      }
+
+      if(nBolaX < game.limiteIzquierda){
+        game.dx *= -1;
+        nBolaX = game.limiteIzquierda;
+      }
+
+      game.bolaX = nBolaX;
+
     }
   </script>
 
