@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="author" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--<link href="css/style.css" rel="stylesheet">-->
+</head>
+
+<body>
+
+  <p>Space Wars</p>
+    <canvas id="canvas" width="600" height="400"></canvas>
+
+
+</body>
+<style>
+body{
+  width: 960px;
+  margin : 0 auto;
+  text-align: center;
+}    
+
+canvas{
+  background: green;
+  border: solid yellow 3px;
+}
+
+</style>
+<script>
+
+  game = {
+    canvas: null,
+    ctx: null
+  }
+  var x=100, y=100;
+
+  const animar = () =>{
+    requestAnimationFrame(animar);
+    verificar();
+    pintar();
+  }
+
+  const verificar = () =>{
+    x+=2;
+    if(x>game.canvas.width) x= 0;
+  }
+
+  const pintar = () => {
+    game.ctx.clearRect(0,0, game.canvas.width, game.canvas.height);
+    game.ctx.fillStyle = "red";
+    game.ctx.beginPath();
+    game.ctx.arc(x, y, 5, 0, 2*Math.PI);
+    game.ctx.fill();
+  }
+
+  window.requestAnimationFrame = (function () {
+        return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            function (callback) { window.setTimeout(callback, 17); }
+})();
+
+
+
+    window.onload = function(){
+        
+        game.canvas = document.getElementById('canvas');
+        
+        if(game.canvas && game.canvas.getContext){
+            game.ctx= canvas.getContext("2d");
+            if(game.ctx){
+                animar();
+            }else{
+                console.log('No se soporta el canvas');
+               
+            }
+        }
+    }
+  </script>
+
+</html>
