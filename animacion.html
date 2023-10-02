@@ -89,7 +89,7 @@ canvas{
       game.ctx.clearRect(0,0,game.canvas.width,game.canvas.height);
       verificar();
       game.bolaX += game.dx;
-      //game.bolaY += game.dy;
+      game.bolaY += game.dy;
       game.ctx.beginPath();
       game.ctx.arc(game.bolaX,game.bolaY,game.radio,0,2*Math.PI,true);
       game.ctx.fill();
@@ -109,7 +109,18 @@ canvas{
         nBolaX = game.limiteIzquierda;
       }
 
+      if(nBolaY > game.limiteAbajo){
+        game.dy *= -1;
+        nBolaY = game.limiteAbajo; 
+      }
+
+      if(nBolaY < game.limiteArriba){
+        game.dy *= -1;
+        nBolaY = game.limiteArriba; 
+      }
+
       game.bolaX = nBolaX;
+      game.bolaY = nBolaY;
 
     }
   </script>
