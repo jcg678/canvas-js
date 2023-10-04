@@ -14,7 +14,7 @@
 <body>
 
   <p>Space Wars</p>
-    <canvas id="canvas" width="600" height="400"></canvas>
+    <canvas id="canvas" width="600" height="500"></canvas>
 
 
 </body>
@@ -26,7 +26,7 @@ body{
 }    
 
 canvas{
-  background: green;
+  background: black;
   border: solid yellow 3px;
 }
 
@@ -110,6 +110,10 @@ canvas{
    const inicio = () => {
     game.ctx.clearRect(0,0,game.canvas.width, game.canvas.height);
     game.caratula = false;
+    game.jugador = new Jugador(0);
+    game.x = game.canvas.width/2;
+    game.jugador.dibujar(game.x);
+    animar();
    }
 
 
@@ -122,17 +126,29 @@ canvas{
   }
 
   const verificar = () =>{
-    x+=2;
-    if(x>game.canvas.width) x= 0;
+    if(game.tecla[KEY_RIGHT]) game.x+=10;
+    if(game.tecla[KEY_LEFT]) game.x-=10;
+
+    
   }
 
   const pintar = () => {
     game.ctx.clearRect(0,0, game.canvas.width, game.canvas.height);
-    game.ctx.fillStyle = "red";
-    game.ctx.beginPath();
-    game.ctx.arc(x, y, 5, 0, 2*Math.PI);
-    game.ctx.fill();
+    game.jugador.dibujar(game.x);
   }
+
+  /*******
+   Listener
+   **/
+   document.addEventListener("keydown", function(e){
+    game.tecladoPulsada = e.keyCode;
+    game.tecla[e.keyCode]=true;
+   });
+
+   document.addEventListener("keyup", function(e){
+    
+    game.tecla[e.keyCode]=false;
+   });
 
   window.requestAnimationFrame = (function () {
         return window.requestAnimationFrame ||
@@ -150,8 +166,11 @@ canvas{
         if(game.canvas && game.canvas.getContext){
             game.ctx= canvas.getContext("2d");
             if(game.ctx){
+              
+              game.imagen = new Image();
+              game.imagen.src = "imagenes/torre.fw.png";
               caratula();
-               // animar();
+              game.canvas.addEventListener("click", seleccionar, false);
             }else{
                 console.log('No se soporta el canvas');
                
