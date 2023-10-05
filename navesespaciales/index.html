@@ -63,7 +63,14 @@ canvas{
     this.x = x;
     this.y = y;
     this.w = w;
-    this.dibujar = function(){};
+    this.dibujar = function(){
+      //dibujar la bala
+      game.ctx.save();
+      game.ctx.fillStyle = game.colorBala;
+      game.ctx.fillRect(this.x,this.y,this.w,this.w);
+      this.y = this.y-4;
+      game.ctx.restore();
+    };
   }
 
   function Jugador(x){
@@ -129,12 +136,28 @@ canvas{
     if(game.tecla[KEY_RIGHT]) game.x+=10;
     if(game.tecla[KEY_LEFT]) game.x-=10;
 
-    
+    if(game.x>game.canvas.width-10) game.x = game.canvas.width-10;
+    if(game.x<0) game.x =10;
+
+    //disparo
+    if(game.tecla[BARRA]){
+      game.balas_array.push(new Bala(game.jugador.x +12, game.jugador.y-3, 5));
+      game.tecla[BARRA]=false;
+    }
   }
 
   const pintar = () => {
     game.ctx.clearRect(0,0, game.canvas.width, game.canvas.height);
     game.jugador.dibujar(game.x);
+
+    //move bullets
+    for(var i=0; i<game.balas_array.length;i++ )
+    {
+      if(game.balas_array[i]!=null){
+        game.balas_array[i].dibujar();
+        if(game.balas_array[i].y<0) game.balas_array[i] = null;
+      }
+    }
   }
 
   /*******
