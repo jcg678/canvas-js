@@ -92,7 +92,10 @@ canvas{
     this.num = 14;
     this.figura = true;
     this.vive = true;
-    this.dibujar = function(){};
+    this.dibujar = function(){
+        game.ctx.drawImage(game.imagenEnemigo,0,0,40,30,this.x,this.y,35,30);
+
+    };
 
   }
 
@@ -158,6 +161,11 @@ canvas{
         if(game.balas_array[i].y<0) game.balas_array[i] = null;
       }
     }
+
+    //enemigos
+    for(var i=0;i<game.enemigos_array.length;i++){
+      game.enemigos_array[i].dibujar();
+    }
   }
 
   /*******
@@ -192,6 +200,18 @@ canvas{
               
               game.imagen = new Image();
               game.imagen.src = "imagenes/torre.fw.png";
+
+              game.imagenEnemigo = new Image();
+              game.imagenEnemigo.src = "imagenes/invader.fw.png";
+              game.imagenEnemigo.onload = function(){
+
+                for(var i=0; i<5; i++){
+                  for(var j=0; j<10; j++){
+                    game.enemigos_array.push(new Enemigo(100+40*j,30+45*i));
+                  }    
+                }
+              }
+
               caratula();
               game.canvas.addEventListener("click", seleccionar, false);
             }else{
