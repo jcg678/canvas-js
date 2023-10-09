@@ -14,7 +14,7 @@
 <body>
 
   <p>Space Wars</p>
-    <canvas id="canvas" width="600" height="500"></canvas>
+    <canvas id="canvas" width="960" height="500"></canvas>
 
 
 </body>
@@ -93,7 +93,34 @@ canvas{
     this.figura = true;
     this.vive = true;
     this.dibujar = function(){
-        game.ctx.drawImage(game.imagenEnemigo,0,0,40,30,this.x,this.y,35,30);
+
+
+          //jumping
+          if(this.ciclos > 30){
+                        //saltitos
+                        if(this.veces>this.num){
+                            this.dx *= -1;
+                            this.veces = 0;
+                            this.num = 28;
+                            this.y += 20;
+                            this.dx = (this.dx>0)?  this.dx++:this.dx--;
+                        }else{
+                            this.x += this.dx;
+                        }
+                        this.veces++;
+                        this.ciclos=0;
+                        this.figura = !this.figura;
+
+                    }else{
+                        this.ciclos++;
+                    }
+
+                    if(this.figura){
+                        game.ctx.drawImage(game.imagenEnemigo,0,0,40,30 ,this.x,this.y,35,30); 
+                    }else{
+                        game.ctx.drawImage(game.imagenEnemigo, 50, 0, 35, 30, this.x, this.y, 35, 30);
+
+                    }
 
     };
 
