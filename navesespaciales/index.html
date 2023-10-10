@@ -44,6 +44,7 @@ canvas{
     colorBala: "red",
     balas_array: new Array(),
     enemigos_array: new Array(),
+    disparo:false,
   }
 
   /****************
@@ -96,33 +97,33 @@ canvas{
 
 
           //jumping
-          if(this.ciclos > 30){
-                        //saltitos
-                        if(this.veces>this.num){
-                            this.dx *= -1;
-                            this.veces = 0;
-                            this.num = 28;
-                            this.y += 20;
-                            this.dx = (this.dx>0)?  this.dx++:this.dx--;
-                        }else{
-                            this.x += this.dx;
-                        }
-                        this.veces++;
-                        this.ciclos=0;
-                        this.figura = !this.figura;
+      if(this.ciclos > 30){
+                    //saltitos
+          if(this.veces>this.num){
+              this.dx *= -1;
+              this.veces = 0;
+              this.num = 28;
+              this.y += 20;
+              this.dx = (this.dx>0)?  this.dx++:this.dx--;
+          }else{
+              this.x += this.dx;
+          }
+          this.veces++;
+          this.ciclos=0;
+          this.figura = !this.figura;
 
-                    }else{
-                        this.ciclos++;
-                    }
+      }else{
+          this.ciclos++;
+      }
 
-                    if(this.figura){
-                        game.ctx.drawImage(game.imagenEnemigo,0,0,40,30 ,this.x,this.y,35,30); 
-                    }else{
-                        game.ctx.drawImage(game.imagenEnemigo, 50, 0, 35, 30, this.x, this.y, 35, 30);
+      if(this.figura){
+          game.ctx.drawImage(game.imagenEnemigo,0,0,40,30 ,this.x,this.y,35,30); 
+      }else{
+          game.ctx.drawImage(game.imagenEnemigo, 50, 0, 35, 30, this.x, this.y, 35, 30);
 
-                    }
+      }
 
-    };
+};
 
   }
 
@@ -160,6 +161,28 @@ canvas{
     requestAnimationFrame(animar);
     verificar();
     pintar();
+    colisiones();
+  }
+
+  const colisiones=()=>{
+    let enemigo, bala;
+    
+    for(var i=0;i<game.enemigos_array.length;i++){
+      console.log('aqui2');
+      for(var j = 0; j<game.balas_array.length; j++){
+        enemigo = game.enemigos_array[i];
+        bala = game.balas_array[j];
+        //console.log('aqui');
+        if(enemigo !=null && bala !=null){
+          if((bala.x>enemigo.x) && (bala.x<enemigo.x+enemigo.w)&& (bala.y > enemigo.y) && (bala.y < enemigo.y+enemigo.w)) {
+              enemigo.vive = false;
+              game.enemigos_array[i] = null;
+              game.balas_array[j]= null;
+              game.disparo = false;
+          }
+        }
+      }
+    }
   }
 
   const verificar = () =>{
@@ -191,7 +214,9 @@ canvas{
 
     //enemigos
     for(var i=0;i<game.enemigos_array.length;i++){
-      game.enemigos_array[i].dibujar();
+      if(game.enemigos_array[i] !=null){
+        game.enemigos_array[i].dibujar();
+      }
     }
   }
 
