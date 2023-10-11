@@ -168,7 +168,7 @@ canvas{
     let enemigo, bala;
     
     for(var i=0;i<game.enemigos_array.length;i++){
-      console.log('aqui2');
+
       for(var j = 0; j<game.balas_array.length; j++){
         enemigo = game.enemigos_array[i];
         bala = game.balas_array[j];
@@ -194,8 +194,13 @@ canvas{
 
     //disparo
     if(game.tecla[BARRA]){
-      game.balas_array.push(new Bala(game.jugador.x +12, game.jugador.y-3, 5));
-      game.tecla[BARRA]=false;
+
+      if(game.disparo==false){
+        game.balas_array.push(new Bala(game.jugador.x +12, game.jugador.y-3, 5));
+        game.tecla[BARRA]=false;
+        game.disparo=true;
+      }
+
     }
   }
 
@@ -207,10 +212,14 @@ canvas{
     for(var i=0; i<game.balas_array.length;i++ )
     {
       if(game.balas_array[i]!=null){
-        game.balas_array[i].dibujar();
-        if(game.balas_array[i].y<0) game.balas_array[i] = null;
-      }
-    }
+            game.balas_array[i].dibujar();
+            if(game.balas_array[i].y<0) {
+              game.disparo = false;
+              game.balas_array[i] = null;
+              }
+        }
+  }
+
 
     //enemigos
     for(var i=0;i<game.enemigos_array.length;i++){
