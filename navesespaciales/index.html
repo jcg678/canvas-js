@@ -42,7 +42,9 @@ canvas{
     tecladoPulsada: null,
     tecla: [],
     colorBala: "red",
+    colorBala2: "yellow",
     balas_array: new Array(),
+    balasEnemigas_array: new Array(),
     enemigos_array: new Array(),
     disparo:false,
   }
@@ -72,6 +74,14 @@ canvas{
       this.y = this.y-4;
       game.ctx.restore();
     };
+
+    this.disparar = function(){
+      game.ctx.save();
+      game.ctx.fillStyle = game.colorBala2;
+      game.ctx.fillRect(this.x, this.y, this.w, this.w);
+      this.y=this.y+6;
+      game.ctx.restore();
+    }
   }
 
   function Jugador(x){
@@ -202,6 +212,26 @@ canvas{
       }
 
     }
+
+    // disparo enemigo
+    if(Math.random()>0.96){
+      dispararEnemigo();
+    }
+  }
+
+  const dispararEnemigo=()=>{
+    var ultimos = new Array();
+
+    for(var i = game.enemigos_array.length-1;i>0;i--){
+      if(game.enemigos_array[i] != null){
+        ultimos.push(i);
+      }
+      if(ultimos.length == 10) break;
+    }
+
+    d=ultimos[Math.floor(Math.random()*10)];
+
+    game.balasEnemigas_array.push(new Bala(game.enemigos_array[d].x+game.enemigos_array[d].w/2,game.enemigos_array[d].y,5));
   }
 
   const pintar = () => {
@@ -218,6 +248,16 @@ canvas{
               game.balas_array[i] = null;
               }
         }
+  }
+
+  //enemy bullets move
+  for(var i=0; i<game.balasEnemigas_array.length;i++){
+    if(game.balasEnemigas_array[i] != null){
+      game.balasEnemigas_array[i].disparar();
+      if(game.balasEnemigas_array[i].y>game.canvas.height)
+      game.balasEnemigas_array[i]=null;
+
+    }
   }
 
 
