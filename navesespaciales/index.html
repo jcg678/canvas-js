@@ -87,9 +87,11 @@ canvas{
   function Jugador(x){
     this.x=x;
     this.y=450;
+    this.w=30;
+    this.h=15;
     this.dibujar = function(x){
       this.x = x;
-      game.ctx.drawImage(game.imagen, this.x, this.y, 30, 15);
+      game.ctx.drawImage(game.imagen, this.x, this.y, this.w, this.h);
     }
   }
 
@@ -193,6 +195,24 @@ canvas{
         }
       }
     }
+
+    //colision balas enemigas
+    for(var j=0;j<game.balasEnemigas_array.length;j++){
+        bala = game.balasEnemigas_array[j];
+        if(bala != null){
+          if((bala.x >game.jugador.x) &&
+            (bala.x<game.jugador.x + game.jugador.w) &&
+            (bala.y > game.jugador.y) &&
+            (bala.y < game.jugador.y + game.jugador.h)){
+                gameOver();
+            }
+        }
+    }
+
+  }
+
+  const gameOver = ()=>{
+    console.log("Termino el juego");
   }
 
   const verificar = () =>{
