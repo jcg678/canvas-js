@@ -47,6 +47,7 @@ canvas{
     balasEnemigas_array: new Array(),
     enemigos_array: new Array(),
     disparo:false,
+    puntos: 0,
   }
 
   /****************
@@ -191,6 +192,7 @@ canvas{
               game.enemigos_array[i] = null;
               game.balas_array[j]= null;
               game.disparo = false;
+              game.puntos +=10;
           }
         }
       }
@@ -256,6 +258,7 @@ canvas{
 
   const pintar = () => {
     game.ctx.clearRect(0,0, game.canvas.width, game.canvas.height);
+    score();
     game.jugador.dibujar(game.x);
 
     //move bullets
@@ -287,6 +290,14 @@ canvas{
         game.enemigos_array[i].dibujar();
       }
     }
+  }
+
+  const score=()=>{
+    game.ctx.save();
+    game.ctx.fillStyle = "white";
+    game.ctx.font = "bold 20px Courier";
+    game.ctx.fillText("Score: " +game.puntos, 10,20);
+    game.ctx.restore();
   }
 
   /*******
