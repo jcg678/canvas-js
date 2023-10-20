@@ -48,6 +48,7 @@ canvas{
     enemigos_array: new Array(),
     disparo:false,
     puntos: 0,
+    finJuego:false,
   }
 
   /****************
@@ -171,10 +172,13 @@ canvas{
   var x=100, y=100;
 
   const animar = () =>{
-    requestAnimationFrame(animar);
-    verificar();
-    pintar();
-    colisiones();
+    if(game.finJuego ==false){
+        requestAnimationFrame(animar);
+        verificar();
+        pintar();
+        colisiones();
+    }
+
   }
 
   const colisiones=()=>{
@@ -214,7 +218,30 @@ canvas{
   }
 
   const gameOver = ()=>{
-    console.log("Termino el juego");
+    game.ctx.clearRect(0,0,game.canvas.width, game.canvas.height);
+    game.balas_array = [];
+    game.enemigos_array = [];
+    game.balasEnemigas_array = [];
+    game.finJuego = true;
+    mensaje("Game Over", 100,60);
+    mensaje("Lograste :"+game.puntos+"puntos",220);
+    if(game.puntos> 100 || game.puntos<=200){
+      mensaje("casi lo logras",340);
+    }else if(game.punto>200){
+      mensaje("felcitaciones,340");
+    }else{
+      mensaje("lo sentimos",340);
+    }
+  }
+
+  const mensaje=(cadena, y, tamano=40)=>{
+    let medio =(game.canvas.width)/2;
+    game.ctx.fillStyle = "green";
+    game.ctx.textBaseline = "top";
+    game.ctx.font = "bold "+tamano+"px Courier";
+    game.ctx.textAlign= "center";
+    game.ctx.fillText(cadena, medio, y);
+    game.ctx.restore();
   }
 
   const verificar = () =>{
