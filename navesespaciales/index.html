@@ -15,7 +15,22 @@
 
   <p>Space Wars</p>
     <canvas id="canvas" width="960" height="500"></canvas>
-
+    <audio id="boing">
+      <source src="sonidos/boing.mp3">
+      <source src="sonidos/boing.ogg">
+    </audio>
+    <audio id="disparo">
+      <source src="sonidos/disparo.mp3">
+      <source src="sonidos/disparo.ogg">
+    </audio>
+    <audio id="intro">
+      <source src="sonidos/intro.mp3">
+      <source src="sonidos/intro.ogg">
+    </audio>
+    <audio id="fin">
+      <source src="sonidos/gameOver.mp3">
+      <source src="sonidos/gameOver.ogg">
+    </audio>
 
 </body>
 <style>
@@ -49,6 +64,10 @@ canvas{
     disparo:false,
     puntos: 0,
     finJuego:false,
+    boing: null,
+    disparoJugador: null,
+    intro: null,
+    fin: null,
   }
 
   /****************
@@ -148,6 +167,7 @@ canvas{
    const caratula = ()=>{
     let imagen = new Image();
     imagen.src = "imagenes/fondo.jpg";
+  
     imagen.onload = () =>{
       game.ctx.drawImage(imagen, 0, 0);
     }
@@ -197,6 +217,7 @@ canvas{
               game.balas_array[j]= null;
               game.disparo = false;
               game.puntos +=10;
+              game.boing.play();
           }
         }
       }
@@ -223,6 +244,7 @@ canvas{
     game.enemigos_array = [];
     game.balasEnemigas_array = [];
     game.finJuego = true;
+    game.fin.play();
     mensaje("Game Over", 100,60);
     mensaje("Lograste :"+game.puntos+"puntos",220);
     if(game.puntos> 100 || game.puntos<=200){
@@ -258,6 +280,7 @@ canvas{
         game.balas_array.push(new Bala(game.jugador.x +12, game.jugador.y-3, 5));
         game.tecla[BARRA]=false;
         game.disparo=true;
+        game.disparoJugador.play();
       }
 
     }
@@ -356,6 +379,11 @@ canvas{
         if(game.canvas && game.canvas.getContext){
             game.ctx= canvas.getContext("2d");
             if(game.ctx){
+
+              game.boing=document.getElementById("boing");
+              game.disparoJugador=document.getElementById("disparo");
+              game.intro=document.getElementById("intro");
+              game.fin=document.getElementById("fin");
               
               game.imagen = new Image();
               game.imagen.src = "imagenes/torre.fw.png";
