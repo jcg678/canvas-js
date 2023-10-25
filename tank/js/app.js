@@ -29,13 +29,45 @@ const BARRA = 32;
 OBJETOS
 **************/
 function Bala(x,y,radianes){
+	this.x = x;
+	this.y = y;
+	this.w = 5;
+	this.velocidad = 8;
+	this.radianes = radianes;
+	this.dibujar = function(){
+
+	}
 	
 }
+
 function Tanque(x,y,radio){
+	this.x=x;
+	this.y=y;
+	this.radio = radio;
+	this.escala = 1;
+	this.rotacion = 0;
+	this.w = 0;
+	this.h;
+	this.dibujar = function(){
+
+	}
 	
 }
 function Enemigo(x,y){
+	this.n = 0;
+	this.x = x;
+	this.y = y;
+	this.inicioX= x;
+	this.inicioY = y;
+	this.estado =1;
+	this.r = 10;
+	this.vive = true;
+	this.velocidad = .3+Math.random();
+	this.color = game.colorEnemigo[Math.floor(Math.random()*game.colorEnemigo.length)];
 	
+	this.dibujar = function(){
+
+	}
 }
 /***********
 FUNCIONES
