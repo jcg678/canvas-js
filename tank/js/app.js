@@ -21,6 +21,14 @@ game = {
 	finJuego: false,
 }
 
+sonidos = {
+	boing: null,
+	disparo: null,
+	intro: null,
+	fin: null,
+	boom: null,
+}
+
 /**************
 CONSTANTES
 **************/
@@ -88,6 +96,7 @@ const seleccionar=(e)=>{
 const inicio=()=>{
 	game.ctx.clearRect(0,0,game.canvas.width,game.canvas.height);
 	game.caratula = false;
+	sonidos.boom.play();
 	animar();
 }
 const animar = () =>{
@@ -115,6 +124,11 @@ window.onload=function(){
 	if(game.canvas && game.canvas.getContext){
 		game.ctx = canvas.getContext("2d");
 		if (game.ctx) {
+			sonidos.boing = document.getElementById("boing");
+			sonidos.disparo = document.getElementById("disparo");
+			sonidos.intro = document.getElementById("intro");
+			sonidos.fin = document.getElementById("fin");
+			sonidos.boom = document.getElementById("boom");
 			caratula();
 			game.canvas.addEventListener("click",seleccionar,false);
 		} else{
