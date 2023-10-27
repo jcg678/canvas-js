@@ -57,7 +57,14 @@ function Tanque(x,y,radio){
 	this.w = 0;
 	this.h;
 	this.dibujar = function(){
-
+		game.imagen.src = "imagenes/tanque.png";
+		game.imagen.onload = function() {
+			this.w = game.imagen.width;
+			this.h = game.imagen.height;
+			let ww = this.w/2;
+			let hh = this.h/2;
+			game.ctx.drawImage(game.imagen, game.centroX-ww, game.centroY-hh);
+		}
 	}
 	
 }
@@ -108,7 +115,7 @@ const verificar = () =>{
 
 } 
 const pintar=()=>{
-
+	game.tanque.dibujar();
 }
 /***********
 INICIO
@@ -129,6 +136,13 @@ window.onload=function(){
 			sonidos.intro = document.getElementById("intro");
 			sonidos.fin = document.getElementById("fin");
 			sonidos.boom = document.getElementById("boom");
+			game.w = game.canvas.width;
+			game.h = game.canvas.height;
+			game.centroX = game.w/2;
+			game.centroY = game.h/2;
+			game.imagen = new Image();
+			game.tanque = new Tanque(game.centroX, game.centroY);
+
 			caratula();
 			game.canvas.addEventListener("click",seleccionar,false);
 		} else{
