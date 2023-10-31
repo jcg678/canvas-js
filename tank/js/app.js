@@ -48,26 +48,33 @@ function Bala(x,y,radianes){
 	
 }
 
-function Tanque(x,y,radio){
-	this.x=x;
-	this.y=y;
+function Tanque(x, y, radio) {
+	this.x = x;
+	this.y = y;
 	this.radio = radio;
 	this.escala = 1;
 	this.rotacion = 0;
 	this.w = 0;
-	this.h;
-	this.dibujar = function(){
+	this.h = 0;
+	this.dibujar = function () {
+
 		game.imagen.src = "imagenes/tanque.png";
-		game.imagen.onload = function() {
+		game.imagen.onload = function () {
+
 			this.w = game.imagen.width;
 			this.h = game.imagen.height;
-			let ww = this.w/2;
-			let hh = this.h/2;
-			game.ctx.drawImage(game.imagen, game.centroX-ww, game.centroY-hh);
+			let ww = this.w / 2;
+			let hh = this.h / 2;
+			game.ctx.drawImage(game.imagen, game.centroX - ww, game.centroY - hh);
+
 		}
+	
 	}
 	
 }
+
+
+
 function Enemigo(x,y){
 	this.n = 0;
 	this.x = x;
@@ -104,6 +111,14 @@ const inicio=()=>{
 	game.ctx.clearRect(0,0,game.canvas.width,game.canvas.height);
 	game.caratula = false;
 	sonidos.boom.play();
+	document.addEventListener("mousemove", function(e){
+		let {x,y} = ajustar(e.clientX, e.clientY);
+		let dx = x -game.centroX;
+		let dy = y - game.centroY;
+		game.radianes = Math.atan2(dy,dx);
+	});
+	game.tanque.dibujar();
+
 	animar();
 }
 const animar = () =>{
@@ -114,17 +129,30 @@ const animar = () =>{
 const verificar = () =>{
 
 } 
-const pintar=()=>{
-	game.tanque.dibujar();
-	mensaje(String(game.radianes),0,450);
+const pintar = () => {
+
+	//game.tanque.dibujar();
+	//mensaje(String(game.radianes),0,450);
+	game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
+	game.ctx.save();
+	game.ctx.translate(game.centroX, game.centroY);
+	game.ctx.scale(game.tanque.escala, game.tanque.escala);
+	game.ctx.rotate(game.radianes);
+	game.ctx.drawImage(game.imagen, -game.imagen.width / 2, -game.imagen.height / 2);
+	game.ctx.restore();
+	
+	
+
 }
 
-const ajustar = (xx,yy)=>{
-	const pos = game.canvas.getBoundingClientRect();
-	const x = xx - postMessage.length;
-	const y = yy -pos.top;
 
-	return {x,y};
+const ajustar = (xx, yy) => {
+
+	const pos = game.canvas.getBoundingClientRect();
+	const x = xx - pos.left;
+	const y = yy - pos.top;
+	return {x, y}	
+
 }
 
 const mensaje = (cadena,x,y)=>{
@@ -136,17 +164,13 @@ const mensaje = (cadena,x,y)=>{
 	game.ctx.textAlign = "center";
 	game.ctx.clearRect(x,y, game.canvas.width,game.canvas.height);
 	game.ctx.fillText(cadena, x+medio, y);
+	game.ctx.restore();
 }
 
 /***
  * Listeners
  */
-document.addEventListener("mousemove", function(e){
-	var {x,y} = ajustar(e.clientX, e.clientY);
-	var dx = x -game.centroX;
-	var dy = y - game.centroY;
-	game.radianes = Math.atan2(dy,dx);
-})
+
 
 
 /***********
