@@ -127,6 +127,13 @@ const animar = () =>{
 	pintar();
 }
 const verificar = () =>{
+	if(game.tecla_array[BARRA]){
+		game.balas_array.push(
+			new Bala(game.centroX+Math.cos(game.radianes)*35, game.centroY+Math.sin(game.radianes)*35,game.radianes)
+		);
+		game.tecla_array[BARRA]=false;
+		sonidos.disparo.play();
+	}
 
 } 
 const pintar = () => {
@@ -182,6 +189,14 @@ window.requestAnimationFrame=(function(){
 	window.mozRequestAnimationFrame ||
 	function(callback){window.setTimeout(callback,17);}
 })();
+
+document.addEventListener("keydown",function(e){
+	game.teclaPulsada = e.keyCode;
+	game.tecla_array[game.teclaPulsada] = true;
+
+});
+
+
 window.onload=function(){
 	game.canvas = document.getElementById("canvas");
 	if(game.canvas && game.canvas.getContext){
