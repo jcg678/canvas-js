@@ -90,7 +90,7 @@ function Enemigo(x, y) {
 	this.r = 10;
 	this.w = this.r * 2;
 	this.vive = true;
-	this.velocidad = .3 + Math.random();
+	this.velocidad = .1 + Math.random();
 	this.color = game.colorEnemigo[Math.floor(Math.random() * game.colorEnemigo.length)];
 	this.dibujar = function () {
 
@@ -179,7 +179,42 @@ const animar = () =>{
 	requestAnimationFrame(animar);
 	verificar();
 	pintar();
+	colisiones();
 }
+
+const colisiones = () =>{
+	game.enemigos_array.map((enemigo,i)=>{
+		game.balas_array.map((bala,j)=>{
+			if(enemigo != null && bala != null){
+				if((bala.x>enemigo.x) &&
+				(bala.x<enemigo.x+enemigo.w) &&
+				(bala.y > enemigo.y) &&
+				(bala.y<enemigo.y + enemigo.w)){
+					game.enemigos_array[i] = null;
+					game.balas_array[j] = null;
+					game.puntos += 10;
+					sonidos.boing.play();
+
+				}
+
+			}
+		});
+
+		if(enemigo != null){
+			if(enemigo.n > 95){
+				game.enemigos_array[i] = null;
+				game.vidas--;
+				sonidos.boom.play();
+				if(game.vidas<=0) gameOver();
+			}
+		}
+	});
+}
+
+const gameOver = () =>{
+	alert ("fin del juego");
+}
+
 const verificar = () =>{
 	if(game.tecla_array[BARRA]){
 		game.balas_array.push(
