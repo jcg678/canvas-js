@@ -18,6 +18,7 @@ game = {
 	h:0,
 	puntos: 0,
 	vidas: 3,
+	balas: 200,
 	finJuego: false,
 }
 
@@ -220,6 +221,7 @@ const verificar = () =>{
 		game.balas_array.push(
 			new Bala(game.centroX+Math.cos(game.radianes)*35, game.centroY+Math.sin(game.radianes)*35,game.radianes)
 		);
+		game.balas--;
 		game.tecla_array[BARRA]=false;
 		sonidos.disparo.play();
 	}
@@ -230,6 +232,7 @@ const pintar = () => {
 	//game.tanque.dibujar();
 	//mensaje(String(game.radianes),0,450);
 	game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
+	marcador();
 	game.ctx.save();
 	game.ctx.translate(game.centroX, game.centroY);
 	game.ctx.scale(game.tanque.escala, game.tanque.escala);
@@ -278,6 +281,20 @@ const mensaje = (cadena,x,y)=>{
 	game.ctx.clearRect(x,y, game.canvas.width,game.canvas.height);
 	game.ctx.fillText(cadena, x+medio, y);
 	game.ctx.restore();
+}
+
+
+const marcador = () => {
+	game.ctx.save();
+	game.ctx.fillStyle = "white";
+	game.ctx.clearRect(0, 0, game.canvas.width, 40);
+	game.ctx.font = "bold 20px Courier";
+	game.ctx.fillText(
+		`Score: ${game.puntos} Vidas: ${game.vidas} Balas: ${game.balas}`, 10, 20
+	);
+
+	game.ctx.restore();
+
 }
 
 /***
