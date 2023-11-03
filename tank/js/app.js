@@ -43,7 +43,12 @@ function Bala(x,y,radianes){
 	this.velocidad = 8;
 	this.radianes = radianes;
 	this.dibujar = function(){
-
+		game.ctx.save();
+		game.ctx.fillStyle = game.colorBala;
+		this.x += Math.cos(this.radianes)*this.velocidad;
+		this.y += Math.sin(this.radianes)*this.velocidad;
+		game.ctx.fillRect(this.x, this.y, this.w, this.w);
+		game.ctx.restore();
 	}
 	
 }
@@ -148,7 +153,18 @@ const pintar = () => {
 	game.ctx.drawImage(game.imagen, -game.imagen.width / 2, -game.imagen.height / 2);
 	game.ctx.restore();
 	
-	
+	for(let i = 0; i<game.balas_array.length; i++){
+		if(game.balas_array[i] != null){
+			game.balas_array[i].dibujar();
+			if(game.balas_array[i].x < 0 
+			|| game.balas_array[i].x > game.w
+		    || game.balas_array[i].y < 0
+			|| game.balas_array[i].y > game.h)
+			{
+				game.balas_array[i] = null;	
+			}
+		}
+	}
 
 }
 
