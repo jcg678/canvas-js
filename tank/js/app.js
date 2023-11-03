@@ -80,21 +80,37 @@ function Tanque(x, y, radio) {
 
 
 
-function Enemigo(x,y){
+function Enemigo(x, y) {
 	this.n = 0;
 	this.x = x;
 	this.y = y;
-	this.inicioX= x;
+	this.inicioX = x;
 	this.inicioY = y;
-	this.estado =1;
+	this.estado = 1;
 	this.r = 10;
+	this.w = this.r * 2;
 	this.vive = true;
-	this.velocidad = .3+Math.random();
-	this.color = game.colorEnemigo[Math.floor(Math.random()*game.colorEnemigo.length)];
-	
-	this.dibujar = function(){
+	this.velocidad = .3 + Math.random();
+	this.color = game.colorEnemigo[Math.floor(Math.random() * game.colorEnemigo.length)];
+	this.dibujar = function () {
 
+		if (this.n < 100 && this.vive) {
+			game.ctx.save();
+			game.ctx.beginPath();
+			game.ctx.fillStyle = this.color;
+			game.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+			game.ctx.fill();
+			this.n += this.velocidad;
+			this.x = game.centroX * this.n / 100 +
+			this.inicioX * (100 - this.n) / 100;
+			this.y = game.centroY * this.n / 100 +
+				this.inicioY * (100 - this.n) / 100;
+			game.ctx.restore();
+			
+		}
 	}
+	
+	
 }
 /***********
 FUNCIONES
@@ -123,9 +139,42 @@ const inicio=()=>{
 		game.radianes = Math.atan2(dy,dx);
 	});
 	game.tanque.dibujar();
-
+	setTimeout(lanzaEnemigo,1000);
 	animar();
 }
+
+
+const lanzaEnemigo = () => {
+
+	let lado = Math.floor(Math.random() * 4) + 1;
+	let x, y;
+
+	if (lado == 1) {
+		x = -10;
+		y = Math.floor(Math.random() * game.h);
+		
+	} else if (lado == 2) {
+		x = Math.floor(Math.random()*game.w);
+		y = -10;
+		
+	} else if (lado == 3) {
+		x = game.w + Math.random()*10;
+		y = Math.floor(Math.random()*game.h);
+		
+	} else if (lado == 4) {
+
+		x = Math.floor(Math.random()*game.w);
+		y = game.h + Math.random()*10;
+		
+	}
+
+
+	game.enemigos_array.push(new Enemigo(x, y));
+	setTimeout(lanzaEnemigo, 2000);
+
+
+}
+
 const animar = () =>{
 	requestAnimationFrame(animar);
 	verificar();
@@ -165,6 +214,12 @@ const pintar = () => {
 			}
 		}
 	}
+
+	game.enemigos_array.map((enemigo, i)=>{
+		if(enemigo !=null){
+			enemigo.dibujar();
+		}
+	});
 
 }
 
