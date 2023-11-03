@@ -130,7 +130,8 @@ const seleccionar=(e)=>{
 	}
 }
 const inicio=()=>{
-	game.ctx.clearRect(0,0,game.canvas.width,game.canvas.height);
+	//game.ctx.clearRect(0,0,game.canvas.width,game.canvas.height);
+	limpiarCanvas();
 	game.caratula = false;
 	sonidos.boom.play();
 	document.addEventListener("mousemove", function(e){
@@ -213,17 +214,25 @@ const colisiones = () =>{
 }
 
 const gameOver = () =>{
-	alert ("fin del juego");
+	limpiarCanvas();
+	mensaje('Fin de Juego', 0,150,"bold 120px Courier","black");
+	mensaje(`Obtuviste: ${game.puntos}`, 0,250,"bold 40px Courier","black");
+	game.finJuego=true;
+	sonidos.fin.play();
 }
 
 const verificar = () =>{
 	if(game.tecla_array[BARRA]){
-		game.balas_array.push(
-			new Bala(game.centroX+Math.cos(game.radianes)*35, game.centroY+Math.sin(game.radianes)*35,game.radianes)
-		);
-		game.balas--;
-		game.tecla_array[BARRA]=false;
-		sonidos.disparo.play();
+
+		if(game.balas>0){
+			game.balas_array.push(
+				new Bala(game.centroX+Math.cos(game.radianes)*35, game.centroY+Math.sin(game.radianes)*35,game.radianes)
+			);
+			game.balas--;
+			game.tecla_array[BARRA]=false;
+			sonidos.disparo.play();
+		}
+
 	}
 
 } 
@@ -231,7 +240,8 @@ const pintar = () => {
 
 	//game.tanque.dibujar();
 	//mensaje(String(game.radianes),0,450);
-	game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
+	//game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
+	limpiarCanvas();
 	marcador();
 	game.ctx.save();
 	game.ctx.translate(game.centroX, game.centroY);
@@ -271,12 +281,12 @@ const ajustar = (xx, yy) => {
 
 }
 
-const mensaje = (cadena,x,y)=>{
+const mensaje = (cadena,x,y,fuente,color)=>{
 	let medio = (game.canvas.width-x)/2;
 	game.ctx.save();
-	game.ctx.fillStyle = "black";
+	game.ctx.fillStyle = color;
 	game.ctx.textBaseline = "top";
-	game.ctx.font = "bold 20px Courier";
+	game.ctx.font = fuente;
 	game.ctx.textAlign = "center";
 	game.ctx.clearRect(x,y, game.canvas.width,game.canvas.height);
 	game.ctx.fillText(cadena, x+medio, y);
@@ -285,7 +295,7 @@ const mensaje = (cadena,x,y)=>{
 
 
 const marcador = () => {
-	game.ctx.save();
+	/*game.ctx.save();
 	game.ctx.fillStyle = "white";
 	game.ctx.clearRect(0, 0, game.canvas.width, 40);
 	game.ctx.font = "bold 20px Courier";
@@ -293,14 +303,18 @@ const marcador = () => {
 		`Score: ${game.puntos} Vidas: ${game.vidas} Balas: ${game.balas}`, 10, 20
 	);
 
-	game.ctx.restore();
+	game.ctx.restore();*/
+	let m = `Score: ${game.puntos} Vidas: ${game.vidas} Balas: ${game.balas}`;
+	mensaje(m, 10,10,"bold 20px Courier","black");
 
 }
 
 /***
  * Listeners
  */
-
+const limpiarCanvas=()=>{
+	game.ctx.clearRect(0,0,game.canvas.width,game.canvas.height);
+} 
 
 
 /***********
