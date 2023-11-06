@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Sprites</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{
+      width: 1000px;
+      margin: 0 auto;    
+      text-align: center;
+    }
+
+    canvas{
+      background-color: green;
+      border: solid yellow 3px;
+    }
+  </style>
+  <script>
+    var canvas,ctx;
+    window.onload = function(){
+      canvas = document.getElementById('canvas');
+      if(canvas && canvas.getContext){
+        if(ctx){
+          var sprinte = new Image();
+          sprite.src = "perro.jpg";
+          sprite.onload = function(){
+            let numColums=6;
+            let numRows = 5;
+
+            let frameWidth = sprite.width / numColums;
+            let frameHeiht = sprite.height / numRows;
+            
+          }
+        }
+
+      }
+    }
+
+  </script>
+  
+</head>
+
+<body>
+
+  <p>Tanks Wars</p>
+    <canvas id="canvas" width="960px" height="600px">
+        Tu navegador  no soportal el canvas de HTML5
+    </canvas>
+   
+
+</body>
+
+
+
+</html>
