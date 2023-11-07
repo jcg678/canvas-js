@@ -23,8 +23,9 @@
     window.onload = function(){
       canvas = document.getElementById('canvas');
       if(canvas && canvas.getContext){
+        ctx = canvas.getContext("2d");
         if(ctx){
-          var sprinte = new Image();
+          var sprite = new Image();
           sprite.src = "perro.jpg";
           sprite.onload = function(){
             let numColums=6;
@@ -32,6 +33,29 @@
 
             let frameWidth = sprite.width / numColums;
             let frameHeiht = sprite.height / numRows;
+            console.log('setrt');
+            let curretFrame = 0;
+
+            setInterval(function(){
+              curretFrame++;
+              console.log('setrt');
+              let maxFrame = numColums*numRows -1;
+
+              if(curretFrame > maxFrame){
+                curretFrame = 0;
+              }
+
+              let column = curretFrame%numColums;
+              let row = Math.floor(curretFrame/ numColums);
+
+              ctx.clearRect(0,0, canvas.width, canvas.height);
+
+              ctx.drawImage(sprite,column*frameWidth, row*frameHeiht, frameWidth,frameHeiht, 40,30, frameWidth,frameHeiht);
+
+
+
+
+            }, 100);
             
           }
         }
@@ -45,7 +69,7 @@
 
 <body>
 
-  <p>Tanks Wars</p>
+  <p>Sprites</p>
     <canvas id="canvas" width="960px" height="600px">
         Tu navegador  no soportal el canvas de HTML5
     </canvas>
