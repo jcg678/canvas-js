@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Animación sprites</title>
+    <style>
+        body {
+            width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        canvas {
+            background-color: cyan;
+            border: solid yellow 3px;
+        }
+    </style>
+    <script>
+
+        var canvas, ctx;
+        window.onload = function () {
+            canvas = document.getElementById("canvas");
+
+            if (canvas && canvas.getContext) {
+                ctx = canvas.getContext("2d");
+                if (ctx) {
+
+                    var sprite = new Image();
+                    sprite.src = "ave.png";
+  
+
+
+                }
+
+            }
+
+
+
+
+
+        }
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+</head>
+
+<body>
+    <canvas id="canvas" width="960px" height="600px">
+        Tu navegador no soporta CANVAS
+    </canvas>
+</body>
+
+</html>
