@@ -18,7 +18,7 @@
     </style>
     <script>
 
-        var canvas, ctx;
+        var canvas, ctx, size;
         window.onload = function () {
             canvas = document.getElementById("canvas");
 
@@ -28,6 +28,46 @@
 
                     var sprite = new Image();
                     sprite.src = "ave.png";
+                    sprite.onload = function(){
+                    let numColums=5;
+                    let numRows = 3;
+
+                    let frameWidth = sprite.width / numColums;
+                    let frameHeiht = sprite.height / numRows;
+                    
+                    let curretFrame = 0;
+                    let dx = 10, x=0;
+                    let dy = 40, y = 30;
+
+                    setInterval(function(){
+                        curretFrame++;
+
+                        x+=dx;
+
+                        if(x>canvas.width){
+                            y += dy;
+                            x=0;
+                            size = Math.random()+0.05;
+
+                        }
+    
+                        let maxFrame = numColums*numRows -2;
+
+                        if(curretFrame > maxFrame){
+                            curretFrame = 0;
+                        }
+
+                        let column = curretFrame%numColums;
+                        let row = Math.floor(curretFrame/ numColums);
+
+                        ctx.clearRect(0,0, canvas.width, canvas.height);
+
+                        ctx.drawImage(sprite,column*frameWidth, row*frameHeiht, frameWidth,frameHeiht, x,y, frameWidth*size,frameHeiht*size);
+
+
+
+
+                    }, 100);
   
 
 
@@ -40,7 +80,7 @@
 
 
         }
-
+    }
 
 
 
