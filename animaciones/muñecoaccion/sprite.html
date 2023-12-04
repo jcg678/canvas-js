@@ -16,7 +16,8 @@
 	</style>
 <script>
 
-		var canvas, ctx, miTecla = null, tecla, corre = true;;
+		var canvas, ctx, miTecla = null, tecla, corre = true,objeto1,objeto;
+		var objetos_array=["Mushroom_1.png","Mushroom_2.png","Tree_1.png","Bush-3.png"];
 
 		window.onload = function () {
 
@@ -71,6 +72,9 @@
 						let cuadro = 1;
 						let salto = 0;
 						let anchoPersonaje, altoPersonaje;
+						objetox = ancho;
+						generaObjeto();
+						objeto = true;
 
 						setInterval(function () {
 
@@ -84,7 +88,14 @@
 								tecla = 4;
 								numColumnas = accion[tecla].n;
 								a = accion[tecla].a;
-
+								
+								objetox-=dx;
+									if(objetox < -objeto1.width && objeto){
+										console.log('entro');
+										objeto = false;
+										let i = 3+Math.floor(Math.random()*4);
+										setTimeout(generaObjeto,i*1000);
+									}
 
 
 							}else{
@@ -96,8 +107,16 @@
 									tecla = 0;
 									numColumnas = accion[tecla].n;
 									a = accion[tecla].a;
+									
+
 
 							}
+
+							if(objeto){
+								ctx.drawImage(objeto1,objetox,300);
+							}
+
+
 
 							index = existe(a, cuadro);
 
@@ -157,6 +176,15 @@
 			}
 		}
 		return -1;
+	}
+
+	function generaObjeto(){
+		objeto = true;
+		objetox = canvas.width;
+		objeto1 = new Image();
+		let i = Math.floor(Math.random()*objetos_array.length);
+		objeto1.src = "objetos/"+objetos_array[i];
+		console.log(objetos_array[i], objetox);
 	}
 
 </script>
